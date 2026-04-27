@@ -19,7 +19,7 @@ public class Main {
       int choix = demanderChoixLot(sc);
       Lot lotChoisi = (choix == 1) ? lot1 : lot2;
 
-      placerLot(sc, grille, lotChoisi, choix);
+      placerLot(sc, grille, lotChoisi, choix, tour);
     }
 
     sc.close();
@@ -36,12 +36,27 @@ public class Main {
     return choix;
   }
 
-  private static void placerLot(Scanner sc, Grille grille, Lot lot, int choixLot) {
+  private static void placerLot(Scanner sc, Grille grille, Lot lot, int choixLot, int tour) {
     for (int j = 0; j < 5; j++) {
       int ligne;
       int colonne;
       String typeElement = lot.getLotX(j);
 
+      if (tour==0 && j==0){
+        do {
+          System.out.printf(
+          "Choix de la ligne (0-4) pour l'element %d du lot %d :%n",
+          j, choixLot
+        );
+        ligne = sc.nextInt();
+
+        System.out.printf(
+          "Choix de la colonne (0-4) pour l'element %d du lot %d :%n",
+          j, choixLot
+        );
+        colonne = sc.nextInt();
+      } while (!Verification.verifierPlacementInitial(grille, typeElement, ligne, colonne));
+      } else {
       do {
         System.out.printf(
           "Choix de la ligne (0-4) pour l'element %d du lot %d :%n",
@@ -56,9 +71,10 @@ public class Main {
         colonne = sc.nextInt();
 
       } while (!Verification.verifierPlacement(grille, typeElement, ligne, colonne));
-
+    }
       int value = convertirElementEnValeur(typeElement);
       grille.setXY(ligne, colonne, value);
+      grille.afficherGrille();
     }
   }
 

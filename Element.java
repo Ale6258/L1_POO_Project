@@ -1,4 +1,4 @@
-public abstract class Element {
+public abstract class Element extends Piece {
     private int x;
     private int y;
 

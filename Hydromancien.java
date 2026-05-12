@@ -4,8 +4,8 @@ public class Hydromancien extends Mage {
     super(x,y);
   }
 
-  public int Gain(){
-    Piece [][] jeu=getGrille();
+  public int Gain(Piece [][] jeu){
+    
     int x= this.getX();
     int y= this.getY();
     int gain = 0;

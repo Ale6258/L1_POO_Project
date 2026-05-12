@@ -1,29 +1,57 @@
-public class Pyromancien extends Mage{
-  public Pyromancien(int x, int y){
-    super(x,y);
-  }
+public class Pyromancien extends Mage {
 
-  public int Gain(Piece [][] jeu){
-    int x= this.getX();
-    int y= this.getY();
-    int gain = 0;
-
-    // ici je parcours les cases adjacentes avec 2 boucles for 
-    for(int i=-1;i<=1;i++){
-      for(int j=-1;j<=1;j++){
-        
-        int tempX = x+i;
-        int tempY = y+j;
-
-        // je vérifie que la case actuelle est bien dans la grille 
-        if(tempX >= 0 && tempX<5 && tempY >= 0 && tempY<5){
-          if(jeu[tempX][tempY] instanceof Feu{
-            gain++;
-          }
-        }
-      }
+    public Pyromancien(int x, int y) {
+        super(x, y);
     }
 
-    return gain;
-  }
+    @Override
+    public TypeMage getTypeMage() {
+        return TypeMage.PYROMANCIEN;
+    }
+
+    @Override
+    public String getSymbole() {
+        return "Y";
+    }
+
+    @Override
+    public int calculerBonus(Grille grille) {
+        int bonus = 0;
+
+        bonus += compterDirection(grille, -1, -1);
+        bonus += compterDirection(grille, -1, 1);
+        bonus += compterDirection(grille, 1, -1);
+        bonus += compterDirection(grille, 1, 1);
+
+        return bonus;
+    }
+
+    private int compterDirection(Grille grille, int dx, int dy) {
+        int bonus = 0;
+
+        int x = getX() + dx;
+        int y = getY() + dy;
+
+        while (grille.estDansGrille(x, y)) {
+            Piece piece = grille.getPiece(x, y);
+
+            if (piece != null && piece.estUnElement()) {
+                Element element = piece.enElement();
+
+                if (element.getType() == TypeElement.FEU) {
+                    bonus++;
+                }
+            }
+
+            x += dx;
+            y += dy;
+        }
+
+        return bonus;
+    }
+
+    @Override
+    public String getNom() {
+        return "Pyromancien";
+    }
 }

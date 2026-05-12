@@ -1,28 +1,46 @@
 public class Verification {
 
-  static boolean verifierPlacement(Grille grille, String typeElement, int ligne, int colonne) {
-    if (ligne < 0 || ligne > 4 || colonne < 0 || colonne > 4) {
-      System.out.println("Position hors limites. Veuillez choisir une position entre 0 et 4.");
-      return false;
-    }
-    if (grille.getXY(ligne, colonne) != 0) {
-      System.out.println("Position déjà occupée. Veuillez choisir une autre position.");
-      return false;
+    public static boolean verifierPlacementInitial(Grille grille, int x, int y) {
+        if (!grille.estDansGrille(x, y)) {
+            Terminal.erreur("Position hors limites. Choisis une ligne et une colonne entre 0 et 4.");
+            return false;
+        }
+
+        if (!grille.estVide(x, y)) {
+            Terminal.erreur("Cette case est déjà occupée.");
+            return false;
+        }
+
+        return true;
     }
 
-    // index out of range
-    if (grille.getXY(ligne+1, colonne) == 0 || grille.getXY(ligne-1, colonne) == 0 || grille.getXY(ligne, colonne+1) == 0 || grille.getXY(ligne, colonne-1) == 0) {
-      System.out.println("L'élément doit être entouré d'autres éléments sur la grille. Veuillez choisir une position adjacente à un élément déjâ présent sur la grille.");
-      return false;
-    }
-    return true;
-  }
+    public static boolean verifierPlacement(Grille grille, int x, int y) {
+        if (!grille.estDansGrille(x, y)) {
+            Terminal.erreur("Position hors limites. Choisis une ligne et une colonne entre 0 et 4.");
+            return false;
+        }
 
-  static boolean verifierPlacementInitial(Grille grille, String typeElement, int ligne, int colonne) {
-    if (ligne < 0 || ligne > 4 || colonne < 0 || colonne > 4) {
-      System.out.println("Position hors limites. Veuillez choisir une position entre 0 et 4.");
-      return false;
+        if (!grille.estVide(x, y)) {
+            Terminal.erreur("Cette case est déjà occupée.");
+            return false;
+        }
+
+        if (!aVoisinOrthogonalOccupe(grille, x, y)) {
+            Terminal.erreur("La pièce doit toucher une case déjà occupée horizontalement ou verticalement.");
+            return false;
+        }
+
+        return true;
     }
-    return true;
-  }
+
+    private static boolean aVoisinOrthogonalOccupe(Grille grille, int x, int y) {
+        return estOccupe(grille, x - 1, y)
+            || estOccupe(grille, x + 1, y)
+            || estOccupe(grille, x, y - 1)
+            || estOccupe(grille, x, y + 1);
+    }
+
+    private static boolean estOccupe(Grille grille, int x, int y) {
+        return grille.estDansGrille(x, y) && !grille.estVide(x, y);
+    }
 }

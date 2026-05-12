@@ -1,3 +1,5 @@
 public enum TypeElement {
-    EAU, FEU, PLANTE
+    FEU,
+    EAU,
+    PLANTE
 }

@@ -18,7 +18,7 @@ public class Hydromancien extends Mage {
         int tempY = y+j;
 
         // je vérifie que la case actuelle est bien dans la grille 
-        if(tempX >= 0 && tempX<5 && tempY <= 0 && tempY<5){
+        if(tempX >= 0 && tempX<5 && tempY >= 0 && tempY<5){
           if(jeu[tempX][tempY] instanceof Eau{
             gain++;
           }

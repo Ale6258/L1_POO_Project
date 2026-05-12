@@ -11,32 +11,21 @@ public class Druide extends Mage{
     int gain = 0;
 
     // faut modifier si le mage est au bord
-    if(jeu[x+1][y+1].getType() == PLANTE){
-      gain++;
-    }
-    if(jeu[x+1][y].getType() == PLANTE){
-      gain++;
-    }
-    if(jeu[x+1][y-1].getType() == PLANTE){
-      gain++;
-    }
-    if(jeu[x][y-1].getType() == PLANTE){
-      gain++;
-    }
-    if(jeu[x-1][y-1].getType() == PLANTE){
-      gain++;
-    }
-    if(jeu[x-1][y].getType() == PLANTE){
-      gain++;
-    }
-    if(jeu[x-1][y+1].getType() == PLANTE){
-      gain++;
-    }
-    if(jeu[x][y+1].getType() == PLANTE){
-      gain++;
+    for(int i=-1;i<=1;i++){
+      for(int j=-1;j<=1;j++){
+        if(i!=0 && j!=0){
+          int tempX = x+i;
+          int tempY = y+j;
+
+          if(tempX >= 0 && tempX<5 && tempY <= 0 && tempY<5){
+            if(jeu[tempX][tempY] instanceof Plante{
+              gain++;
+            }
+          }         
+        }
+      }
     }
 
     return gain;
-    
-
+  }
 }
